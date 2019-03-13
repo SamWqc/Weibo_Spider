@@ -1,16 +1,16 @@
 # weibo_spider
 独立开发的关于微博信息爬虫的项目。
 
-微博数据爬取项目   
 ## 一、项目总览
 1、开发环境：
 - python 3.6
 - mysql 5.6
 - 所需依赖：re datetime requests BeautifulSoup pymysql
 
-2、现阶段已经实现了三个基本功能：<br>
+2、现阶段已经实现了四个基本功能：<br>
 - 根据搜索的关键字和起始时间条件搜索微博，对微博的信息进行爬取。<br>
 - 获取(1)中通过关键字搜索出的各个微博的用户ID，并进行去重操作，爬取各个用户的基本信息。<br>
+- 获取(1)中通过关键字搜索出的各个微博的微博ID，并进行去重操作，通过微博ID获取此微博下的全部评论信息。<br>
 - 仅通过某个微博用户ID爬取此ID的全部微博内容。<br>
 
 3、接口说明: <br>
@@ -41,6 +41,10 @@ user_spider             - 爬取根据关键字搜索到的微博对应的微博
 weibo_spider            - 根据某个用户ID爬取其所有微博的模块 -<br>
 -----cookie.file        存储可用的cookie信息                 
 -----weibo_start.py     爬取用户全部微博的主要功能函数：其中包括爬取某页全部微博、微博所有页数的计算、保存数据库等功能<br>
+
+comment_spider             - 爬取根据关键字搜索到的微博对应的微博下的全部评论-<br>
+----cookie.file         存储可用的cookie信息<br>
+----comment_start.py       爬取微博评论的主要功能函数：包括获取所爬取微博的所有微博ID，并根据每个ID爬取其全部评论信息<br>
 <br>
 <br>
 ## 三、项目使用介绍
@@ -52,9 +56,14 @@ Ps：三个模块的功能相互独立，可直接运行 *_start.py 函数使用
 2、爬取根据关键字搜索到的微博对应的微博用户的基本资料模块：<br>
 - 此模块需要获取cookie，cookie存于目录下的cookie.file中，<br>
 - 手动获取cookie的操作如下：必须使用谷歌浏览器，登录https://weibo.cn/，登陆成功后将网页地址统一成https://weibo.cn/，打开谷歌浏览器开发工具，选择network,点击weibo.cn，查看Request Headers中的Cookie
-- 直接运行user_start_fast即可使用，运行时会提示是否更新cookie，如不更新，输入n/N即可
+- 直接运行user_start即可使用，运行时输入要爬取的评论的微博关键字，运行时会提示是否更新cookie，如不更新，输入n/N即可
 
-3、 根据某个用户ID爬取其所有微博的模块<br>
+3、爬取根据关键字搜索到的微博对应的全部评论：<br>
+- 此模块需要获取cookie，cookie存于目录下的cookie.file中，<br>
+- 获取cookie操作同上
+- 直接运行commentr_start即可使用，运行时输入要爬取的评论的微博关键字，会提示是否更新cookie，如不更新，输入n/N即可
+
+4、 根据某个用户ID爬取其所有微博的模块<br>
 - 此模块需要获取cookie，cookie存于目录下的cookie.file中<br>
 - 获取cookie操作同上
 - 直接运行weibo_start.py即可使用<br>
